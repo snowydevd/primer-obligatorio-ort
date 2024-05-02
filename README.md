@@ -1,8 +1,8 @@
 # Primer obligatorio - TALLER TECNOLOGIAS - ORT
-Grupo:
-Lautaro Chini
-Alejo Sant anna
-Facundo Ortiz
+## Grupo:
+- Lautaro Chini
+- Alejo Sant anna
+- Facundo Ortiz
 
  docente: Anuar
 
