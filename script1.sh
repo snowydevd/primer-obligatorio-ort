@@ -33,30 +33,30 @@ iniciarSesion() {
     echo "Ingrese contraseña"
     read contraUsuario
 
-    targetFile="$nombreUsuario.txt"
+    TARGET_FILE="$nombreUsuario.txt"
     # userPass= cat $targetFile | grep $
 
-    if [ -f targetFile ]; then
-        menu
+    # userPass= cat $TARGET_FILE
+    cat $TARGET_FILE  
+    echo $userPass
+
+    if [ $userPass -ne $contraUsuario ]; then
+        echo ""
+        echo "#########################################"
+        echo "##    NOMBRE O CONTRASEÑA INCORRECTO   ##"
+        echo "#########################################"
+        echo ""
+      
     else
         echo ""
-        echo "Usuario no encontrado"
+        echo "#########################################"
+        echo "##    USUARIO ENCONTRADO CON EXITO     ##"
+        echo "#########################################"
+        echo ""
+
+        menu
+          
     fi
-
-
-
-    # passwordUsuario=(grep $pass) < passwords.txt
-    # userName=(grep $usuario) < usuarios.txt
-
-    # if [ $passwordUsuario -ne $pass & $userName -ne $usuario ]; then
-
-    #     echo ""
-    #     echo "#########################"
-    #     echo "Inicio de sesion invalido"
-    #     echo "El usuario o la contraseña no han sido encontrados"
-    # else
-    #     menu
-    # fi
 
 }
 
