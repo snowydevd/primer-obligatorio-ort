@@ -58,7 +58,13 @@ while [ $opcion -ne 11 ]; do
         cat diccionario.txt | grep $letraCont | grep ^$letraInicial | grep $letraFinal$ > palabras.txt
         cat palabras.txt | grep -c "." >> palabras.txt
         cat diccionario.txt | grep -c "." >> palabras.txt
-        echo "$date" >> palabras.txt
+        palTotales= grep $letraCont diccionario.txt | grep ^$letraInicial diccionario.txt | grep $letraFinal$ diccionario.txt | grep -c "."
+        palDiccionario= grep -c "." diccionario.txt
+        echo "$palTotales" >> palabras.txt
+        echo "$palDiccionario" >> palabras.txt
+        percent=$((palTotales*100/palDiccionario)) 
+        $percent >> palabras.txt
+        date >> palabras.txt
 
     elif [ $opcion -eq 7 ]; then 
         echo "Ingrese una vocal"
@@ -91,6 +97,22 @@ while [ $opcion -ne 11 ]; do
         echo "El promedio es $prom"
         echo "El mayor valor es $max"
         echo "El menor valor es $min"
+    elif [ $opcion -eq 10 ]; then 
+        echo "Ingrese palabra"
+        read palabra
+        valido=0
+        largoPalabra=${#palabra}
+        for ((i=0; i<largoPalabra; i++)); 
+        do 
+            if [ ${palabra:i:1} = ${palabra:largoPalabra-i:1} ]; then 
+                $valido++
+            fi
+        done 
+        if [ $valido -eq 0 ]; then 
+            echo "La palabra es capicúa"
+        else 
+            echo "La palabra NO es capicúa"
+        fi 
     fi 
     suma=0
     menu
