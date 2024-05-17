@@ -1,5 +1,6 @@
 #!/bin/bash
 touch usuarios.txt
+mkdir usuarios
 # pwd
 
 menu() {
@@ -34,18 +35,6 @@ iniciarSesion() {
     read contraUsuario
 
     TARGET_FILE=./$nombreUsuario.txt
-
-    # userPass= cat $TARGET_FILE
-
-    # # cat $TARGET_FILE  
-    # echo $contraUsuario
-    # echo $userPass
-
-    # if [[ $userPass -eq $contraUsuario ]]; then 
-    #  echo "La contraseña es correcta"
-    # else
-    #  echo "La contraseña no fue encontrada o no es correcta"
-    # fi
 
     if [ -f "$TARGET_FILE" ]; then
         userPass=$(cat "$TARGET_FILE")
@@ -136,75 +125,100 @@ menuUsuario
 
 read opcion
 
-while [ $opcion -ne 11 ]; do
-    if [ $opcion -eq 1 ]; then
-        echo ""
+while [ $opcion -ne 11 ]; do 
+    if [ $opcion -eq 1 ]; then 
         echo "La lista de usuarios es: "
-        cat usuarios.txt
+        cat userReg.txt
         echo ""
         echo ""
-    elif [ $opcion -eq 3 ]; then
+    elif [ $opcion -eq 3 ]; then 
         echo "Ingrese letra inicial"
         read letraInicial
-    elif [ $opcion -eq 4 ]; then
+    elif [ $opcion -eq 4 ]; then 
         echo "Ingrese letra final"
         read letraFinal
-    elif [ $opcion -eq 5 ]; then
+    elif [ $opcion -eq 5 ]; then 
         echo "Ingrese letra contenida"
         read letraCont
-    elif [ $opcion -eq 6 ]; then
-        cat diccionario.txt | grep $letraCont | grep ^$letraInicial | grep $letraFinal$
+    elif [ $opcion -eq 6 ]; then 
+        cat diccionario.txt | grep $letraCont | grep ^$letraInicial | grep $letraFinal$ 
         touch palabras.txt
-        cat diccionario.txt | grep $letraCont | grep ^$letraInicial | grep $letraFinal$ >palabras.txt
-        cat palabras.txt | grep -c "." >>palabras.txt
-        cat diccionario.txt | grep -c "." >>palabras.txt
-        echo "$date" >>palabras.txt
+        cat diccionario.txt | grep $letraCont | grep ^$letraInicial | grep $letraFinal$ > palabras.txt
+        echo "La cantidad de palabras que cumplen las condiciones es:" >> palabras.txt
+        cat palabras.txt | grep -c "." >> palabras.txt
+        palTotales=$( tail -n 1 palabras.txt )
+        echo "La cantidad de palabras totales es:" >> palabras.txt
+        cat diccionario.txt | grep -c "." >> palabras.txt
+        palDiccionario=$( tail -n 1 palabras.txt )
+        percent=$((palTotales*100/palDiccionario))
+        echo "El porcentaje de palabras filtradas es: $percent" >> palabras.txt
+        date >> palabras.txt
 
-    elif [ $opcion -eq 7 ]; then
+    elif [ $opcion -eq 7 ]; then 
+        vocales=aeiou
         echo "Ingrese una vocal"
         read vocal
-        vocales=aeiou
+        if [[ $vocales != *$vocal* || ${#vocal} != 1 ]]; then 
+            echo "Ingrese una vocal valida"
+            read vocal
+        fi
         numVocal=0
         while [ ${vocales:numVocal:1} != $vocal ]; do
             numVocal+=1
-        done
-    elif [ $opcion -eq 8 ]; then
-        cat diccionario.txt | grep -v ${vocales:(numVocal + 1)%5:1} | grep -v ${vocales:(numVocal + 2)%5:1} | grep -v ${vocales:(numVocales + 3)%5:1} | grep -v ${vocales:(numVocales + 4)%5:1} | grep $vocal
-    elif [ $opcion -eq 9 ]; then
+        done 
+    elif [ $opcion -eq 8 ]; then 
+        cat diccionario.txt | grep -v ${vocales:(numVocal+1)%5:1} | grep -v ${vocales:(numVocal+2)%5:1} | grep -v ${vocales:(numVocales+3)%5:1} | grep -v ${vocales:(numVocales+4)%5:1} | grep $vocal
+    elif [ $opcion -eq 9 ]; then 
         echo "Ingrese cantidad de datos"
         read cant
         cantProm=$cant
-        while [ $cant -ne 0 ]; do
-            max=0
-            min=0
+        max=0
+        min=0
+        while [ $cant -ne 0 ]; do 
             echo "Ingrese dato"
             read dato
-            suma=$((suma + dato))
-            cant=$((cant - 1))
-            if [[ $cant=$cantProm || $dato > max ]]; then
+            suma=$((suma+dato))
+            if [[ $cant -eq $cantProm || $dato > max ]]; then 
                 max=$dato
-            elif [[ $cant=$cantProm || $dato < min ]]; then
+            fi
+            if [[ $cant -eq $cantProm || $dato < min ]]; then 
                 min=$dato
             fi
-        done
-        prom=$((suma / cantProm))
+            cant=$((cant-1))
+        done 
+        prom=$((suma/cantProm))
         echo "El promedio es $prom"
-        echo "El mayor valor es $max"
-        echo "El menor valor es $min"
-    fi
+        echo "El menor valor es $max"
+        echo "El mayor valor es $min"
+    elif [ $opcion -eq 10 ]; then
+        echo "Ingrese una palabra"
+        read palabra
+        capicua=false
+        largo=${#palabra}
+        #Invertimos la palabra y la guardamos en otra variable
+        for((i=largo-1;i>=0;i--)); do
+            invertida=$invertida${palabra:$i:1}
+        done
+        #Verificamos si la palabra es capicua
+        if [ "$palabra" = "$invertida" ]; then
+            capicua=true
+        fi
+        #Imprimimos el resultado
+        if [ $capicua = true ]; then
+            echo "La palabra es capicua"
+        else 
+            echo "La palabra NO es capicua"
+        fi
+    fi 
     suma=0
     menu
     read opcion
-done
-if [ $opcion -eq 11 ]; then
+done 
+
+if [ $opcion = 11 ]; then
     echo ""
     echo "#############################"
     echo "### GRACIAS POR ELEGIRNOS ###"
-    echo "###    VUELVA PRONTO      ###"
+    echo "###    VUELVA PRONTO :)   ###"
     echo "#############################"
 fi
-
-algoritmo2() {
-    echo "Ingrese palabra"
-
-}
