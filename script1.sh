@@ -33,30 +33,45 @@ iniciarSesion() {
     echo "Ingrese contraseña"
     read contraUsuario
 
-    TARGET_FILE="$nombreUsuario.txt"
-    # userPass= cat $targetFile | grep $
+    TARGET_FILE=./$nombreUsuario.txt
 
     # userPass= cat $TARGET_FILE
-    cat $TARGET_FILE  
-    echo $userPass
 
-    if [ $userPass -ne $contraUsuario ]; then
+    # # cat $TARGET_FILE  
+    # echo $contraUsuario
+    # echo $userPass
+
+    # if [[ $userPass -eq $contraUsuario ]]; then 
+    #  echo "La contraseña es correcta"
+    # else
+    #  echo "La contraseña no fue encontrada o no es correcta"
+    # fi
+
+    if [ -f "$TARGET_FILE" ]; then
+        userPass=$(cat "$TARGET_FILE")
+        if [ "$userPass" = "$contraUsuario" ]; then
+            echo ""
+            echo "#########################################"
+            echo "##             BIENVENIDO!             ##"
+            echo "#########################################"
+            echo ""
+
+            menu
+        else
+            echo ""
+            echo "#########################################"
+            echo "##    NOMBRE O CONTRASEÑA INCORRECTO   ##"
+            echo "#########################################"
+            echo ""
+        fi
+    else
         echo ""
         echo "#########################################"
         echo "##    NOMBRE O CONTRASEÑA INCORRECTO   ##"
         echo "#########################################"
         echo ""
-      
-    else
-        echo ""
-        echo "#########################################"
-        echo "##    USUARIO ENCONTRADO CON EXITO     ##"
-        echo "#########################################"
-        echo ""
-
-        menu
-          
     fi
+    cd ..
 
 }
 
