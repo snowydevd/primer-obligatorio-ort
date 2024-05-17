@@ -1,8 +1,39 @@
-yuxtaponen
-yuxtapongan
-yuxtapusieran
-yuxtapusieron
-yuxtapusiesen
-5
+fabril
+facial
+fangal
+fardel
+farol
+fatal
+fecal
+federal
+femoral
+fenomenal
+ferial
+ferrocarril
+festival
+fetal
+feudal
+filial
+filosofal
+final
+fiscal
+floral
+fluvial
+focal
+fontanal
+foral
+forestal
+formal
+fraternal
+frontal
+frugal
+frutal
+funcional
+fundamental
+funeral
+La cantidad de palabras que cumplen las condiciones es:
+34
+La cantidad de palabras totales es:
 174845
-
+El porcentaje de palabras filtradas es: 0
+Fri May 17 18:09:06 MST 2024

@@ -127,17 +127,60 @@ read opcion
 
 while [ $opcion -ne 11 ]; do 
     if [ $opcion -eq 1 ]; then 
+        echo ""
         echo "La lista de usuarios es: "
-        cat userReg.txt
+        cat usuarios.txt
         echo ""
         echo ""
+    elif [ $opcion -eq 2 ]; then
+        touch temp.txt
+
+        echo ""
+        echo "Elija una cuenta para dar de alta de la proxima lista:"
+        cat usuarios.txt
+        echo ""
+
+        echo "Ingrese nombre de la cuenta que desea dar de alta"
+        read nombreCuenta
+
+        
+        cd usuarios 
+        userFile=./$nombreCuenta.txt
+
+        if [ -f "$userFile" ]; then
+            rm $nombreCuenta.txt
+            cd ..
+            sed "/$nombreCuenta/d" usuarios.txt > temp.txt
+            mv temp.txt usuarios.txt
+            echo ""
+            echo "#########################################"
+            echo "##        CUENTA DADA DE ALTA          ##"
+            echo "#########################################"
+            echo ""
+        else
+            echo ""
+            echo "#########################################"
+            echo "##        ESTA CUENTA NO EXISTE        ##"
+            echo "#########################################"
+            echo ""
+        fi
+
+        
+
+
     elif [ $opcion -eq 3 ]; then 
+        echo ""
+
         echo "Ingrese letra inicial"
         read letraInicial
     elif [ $opcion -eq 4 ]; then 
+        echo ""
+
         echo "Ingrese letra final"
         read letraFinal
     elif [ $opcion -eq 5 ]; then 
+        echo ""
+
         echo "Ingrese letra contenida"
         read letraCont
     elif [ $opcion -eq 6 ]; then 
@@ -155,6 +198,8 @@ while [ $opcion -ne 11 ]; do
         date >> palabras.txt
 
     elif [ $opcion -eq 7 ]; then 
+        echo ""
+
         vocales=aeiou
         echo "Ingrese una vocal"
         read vocal
@@ -167,8 +212,12 @@ while [ $opcion -ne 11 ]; do
             numVocal+=1
         done 
     elif [ $opcion -eq 8 ]; then 
+        echo ""
+
         cat diccionario.txt | grep -v ${vocales:(numVocal+1)%5:1} | grep -v ${vocales:(numVocal+2)%5:1} | grep -v ${vocales:(numVocales+3)%5:1} | grep -v ${vocales:(numVocales+4)%5:1} | grep $vocal
     elif [ $opcion -eq 9 ]; then 
+        echo ""
+
         echo "Ingrese cantidad de datos"
         read cant
         cantProm=$cant
@@ -191,6 +240,8 @@ while [ $opcion -ne 11 ]; do
         echo "El menor valor es $max"
         echo "El mayor valor es $min"
     elif [ $opcion -eq 10 ]; then
+        echo ""
+
         echo "Ingrese una palabra"
         read palabra
         capicua=false
@@ -221,4 +272,3 @@ if [ $opcion = 11 ]; then
     echo "### GRACIAS POR ELEGIRNOS ###"
     echo "###    VUELVA PRONTO :)   ###"
     echo "#############################"
-fi
